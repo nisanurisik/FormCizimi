@@ -6,7 +6,7 @@ class Program
 
     static void Main(string[] args)
     {
-        FormDegistir(new CariForm());
+        FormDegistir(new AnaMenuForm());
 
         while (true)
         {
