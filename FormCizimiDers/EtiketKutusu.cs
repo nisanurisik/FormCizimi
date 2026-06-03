@@ -18,7 +18,7 @@ public class EtiketKutusu : Kutu
             Ciz();
         }
     }
-    
+
     public override void Ciz()
     {
         base.Ciz();

@@ -53,7 +53,7 @@ public class ButonKutusu : Kutu
     {
         if (keyInfo.Key == ConsoleKey.Spacebar)
         {
-            if(IslemYap != null)
+            if (IslemYap != null)
                 IslemYap();
         }
     }
