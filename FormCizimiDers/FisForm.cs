@@ -176,9 +176,26 @@ public class FisForm : Form
 
         base.TusIsle(info);
 
+        StokAdiAlaniniAtla(info);
+
         StokKodlariniKontrolEt();
 
         AktifKutuImleciniDuzelt();
+    }
+
+    private void StokAdiAlaniniAtla(ConsoleKeyInfo info)
+    {
+        if (info.Key != ConsoleKey.Tab && info.Key != ConsoleKey.Enter)
+            return;
+
+        foreach (var satir in stokSatirlari)
+        {
+            if (AktifKutu == satir.KutuStokAdi)
+            {
+                base.TusIsle(new ConsoleKeyInfo('\t', ConsoleKey.Tab, false, false, false));
+                break;
+            }
+        }
     }
 
     private void IlkSatiriEkle()
@@ -243,11 +260,13 @@ public class FisForm : Form
                 Boyut = new Size(24, 3),
                 Konum = new Point(2, y)
             },
+
             KutuStokAdi = new MetinKutusu()
             {
                 Boyut = new Size(24, 3),
                 Konum = new Point(27, y)
             },
+
             KutuStokAdedi = new MetinKutusu()
             {
                 Boyut = new Size(24, 3),
@@ -297,9 +316,10 @@ public class FisForm : Form
             }
 
             satir.KutuStokAdi.Deger = stok.StokAdi;
-            satir.KutuStokAdedi.Deger = stok.Adet;
 
-            MesajYaz("Stok bilgileri getirildi.");
+            satir.KutuStokAdedi.Deger = "";
+
+            MesajYaz("Stok adı getirildi. Stok adedini kullanıcı girecek.");
         }
     }
 
@@ -370,23 +390,98 @@ public class FisForm : Form
 
     private void Kaydet()
     {
-        string kayit = "=====================================\n" +
-                       "Tarih : " + DateTime.Now + "\n" +
-                       "Fiş Numarası : " + kutuFisNumarasi.Deger + "\n" +
-                       "Fiş Tarihi : " + kutuFisTarihi.Deger + "\n" +
-                       "Açıklama : " + kutuAciklama.Deger + "\n" +
-                       "Stoklar : \n";
+        if (string.IsNullOrWhiteSpace(kutuFisNumarasi.Deger))
+        {
+            MesajYaz("Fiş numarası boş olamaz.");
+            AktifKutuImleciniDuzelt();
+            return;
+        }
+
+        if (string.IsNullOrWhiteSpace(kutuFisTarihi.Deger))
+        {
+            MesajYaz("Fiş tarihi boş olamaz.");
+            AktifKutuImleciniDuzelt();
+            return;
+        }
+
+        var islenecekSatirlar = stokSatirlari
+            .Where(x => !string.IsNullOrWhiteSpace(x.KutuStokKodu.Deger))
+            .ToList();
+
+        if (islenecekSatirlar.Count == 0)
+        {
+            MesajYaz("Kaydedilecek stok satırı yok.");
+            AktifKutuImleciniDuzelt();
+            return;
+        }
+
+        foreach (var satir in islenecekSatirlar)
+        {
+            var stok = StokBul(satir.KutuStokKodu.Deger);
+
+            if (stok == null)
+            {
+                MesajYaz("Stok bulunamadı: " + satir.KutuStokKodu.Deger);
+                AktifKutuImleciniDuzelt();
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(satir.KutuStokAdedi.Deger))
+            {
+                MesajYaz("Stok adedi boş olamaz: " + satir.KutuStokKodu.Deger);
+                AktifKutuImleciniDuzelt();
+                return;
+            }
+
+            if (!int.TryParse(satir.KutuStokAdedi.Deger, out int girilenAdet))
+            {
+                MesajYaz("Stok adedi sayısal olmalıdır: " + satir.KutuStokKodu.Deger);
+                AktifKutuImleciniDuzelt();
+                return;
+            }
+
+            if (girilenAdet <= 0)
+            {
+                MesajYaz("Stok adedi 0'dan büyük olmalıdır: " + satir.KutuStokKodu.Deger);
+                AktifKutuImleciniDuzelt();
+                return;
+            }
+
+            if (!int.TryParse(stok.Adet, out int mevcutAdet))
+            {
+                MesajYaz("Stok kartındaki adet hatalı: " + satir.KutuStokKodu.Deger);
+                AktifKutuImleciniDuzelt();
+                return;
+            }
+
+            if (girilenAdet > mevcutAdet)
+            {
+                MesajYaz("Girilen adet mevcut stoktan fazla: " + satir.KutuStokKodu.Deger);
+                AktifKutuImleciniDuzelt();
+                return;
+            }
+        }
+
+        string kayit =
+            "=====================================\n" +
+            "Tarih : " + DateTime.Now + "\n" +
+            "Fiş Numarası : " + kutuFisNumarasi.Deger + "\n" +
+            "Fiş Tarihi : " + kutuFisTarihi.Deger + "\n" +
+            "Açıklama : " + kutuAciklama.Deger + "\n" +
+            "Stoklar : \n";
 
         int sira = 1;
 
-        foreach (var satir in stokSatirlari)
+        foreach (var satir in islenecekSatirlar)
         {
-            if (string.IsNullOrWhiteSpace(satir.KutuStokKodu.Deger))
-                continue;
+            int girilenAdet = int.Parse(satir.KutuStokAdedi.Deger);
 
-            kayit += "  " + sira + ". Stok Kodu : " + satir.KutuStokKodu.Deger + "\n" +
-                     "  " + sira + ". Stok Adı : " + satir.KutuStokAdi.Deger + "\n" +
-                     "  " + sira + ". Stok Adedi : " + satir.KutuStokAdedi.Deger + "\n";
+            StokAdediniDusur(satir.KutuStokKodu.Deger, girilenAdet);
+
+            kayit +=
+                " " + sira + ". Stok Kodu : " + satir.KutuStokKodu.Deger + "\n" +
+                " " + sira + ". Stok Adı : " + satir.KutuStokAdi.Deger + "\n" +
+                " " + sira + ". Stok Adedi : " + satir.KutuStokAdedi.Deger + "\n";
 
             sira++;
         }
@@ -395,8 +490,72 @@ public class FisForm : Form
 
         File.AppendAllText(fisDosyaYolu, kayit);
 
-        MesajYaz("Fiş kaydı dosyaya yazıldı.");
+        MesajYaz("Fiş kaydedildi ve stok adetleri düşüldü.");
         AktifKutuImleciniDuzelt();
+    }
+
+    private void StokAdediniDusur(string stokKodu, int dusulecekAdet)
+    {
+        if (!File.Exists(stokDosyaYolu))
+            return;
+
+        List<string> tumSatirlar = File.ReadAllLines(stokDosyaYolu).ToList();
+
+        List<string> yeniSatirlar = new List<string>();
+        List<string> aktifKayit = new List<string>();
+
+        foreach (string satir in tumSatirlar)
+        {
+            if (string.IsNullOrWhiteSpace(satir))
+            {
+                KaydiGuncelleyipEkle(yeniSatirlar, aktifKayit, stokKodu, dusulecekAdet);
+                yeniSatirlar.Add(satir);
+                aktifKayit.Clear();
+                continue;
+            }
+
+            aktifKayit.Add(satir);
+        }
+
+        if (aktifKayit.Count > 0)
+        {
+            KaydiGuncelleyipEkle(yeniSatirlar, aktifKayit, stokKodu, dusulecekAdet);
+        }
+
+        File.WriteAllLines(stokDosyaYolu, yeniSatirlar);
+    }
+
+    private void KaydiGuncelleyipEkle(
+        List<string> yeniSatirlar,
+        List<string> aktifKayit,
+        string stokKodu,
+        int dusulecekAdet)
+    {
+        string kayittakiStokKodu = DegeriBul(aktifKayit, "Stok Kodu");
+
+        if (kayittakiStokKodu == stokKodu)
+        {
+            for (int i = 0; i < aktifKayit.Count; i++)
+            {
+                if (aktifKayit[i].StartsWith("Adet"))
+                {
+                    string mevcutAdetDegeri = DegeriBul(aktifKayit, "Adet");
+
+                    if (int.TryParse(mevcutAdetDegeri, out int mevcutAdet))
+                    {
+                        int yeniAdet = mevcutAdet - dusulecekAdet;
+                        aktifKayit[i] = "Adet : " + yeniAdet;
+                    }
+
+                    break;
+                }
+            }
+        }
+
+        foreach (string kayitSatiri in aktifKayit)
+        {
+            yeniSatirlar.Add(kayitSatiri);
+        }
     }
 
     private void Vazgec()
@@ -444,7 +603,7 @@ public class FisForm : Form
 
     private void AktifKutuImleciniDuzelt()
     {
-        if (Kutular.Count > 0 && AktifKutu.AktifOlabilir)
+        if (Kutular.Count > 0)
         {
             AktifKutu.AktifEt();
         }
