@@ -8,11 +8,11 @@ public class CariGuncelleme : Form
     private readonly string dosyaYolu = "cariler.txt";
 
     private List<string[]> kayitlar = new List<string[]>();
+
     private bool duzenlemeModu = false;
     private int secilenKayitIndex = -1;
 
     private MetinKutusu kutuKayitNo;
-
     private MetinKutusu kutuFirmaAdi;
     private MetinKutusu kutuFirmaVkn;
     private MetinKutusu kutuAdSoyad;
@@ -21,6 +21,8 @@ public class CariGuncelleme : Form
     private MetinKutusu kutuIlce;
     private MetinKutusu kutuAdres;
     private MetinKutusu kutuKategori;
+    private MetinKutusu kutuBorc;
+    private MetinKutusu kutuAlacak;
 
     public CariGuncelleme(Form oncekiForm)
     {
@@ -74,6 +76,7 @@ public class CariGuncelleme : Form
             Konum = new Point(31, 22),
             Deger = "Seç"
         };
+
         butonSec.IslemYap += KayitSec;
 
         Kutular.Add(etiketKayitNo);
@@ -86,102 +89,45 @@ public class CariGuncelleme : Form
         duzenlemeModu = true;
         Kutular.Clear();
 
-        kutuAdSoyad = new MetinKutusu()
-        {
-            Boyut = new Size(20, 3),
-            Konum = new Point(18, 0)
-        };
-        kutuTelefon = new MetinKutusu()
-        {
-            Boyut = new Size(20, 3),
-            Konum = new Point(55, 0)
-        };
-        kutuFirmaAdi = new MetinKutusu()
-        {
-            Boyut = new Size(20, 3),
-            Konum = new Point(18, 4)
-        };
-        kutuFirmaVkn = new MetinKutusu()
-        {
-            Boyut = new Size(20, 3),
-            Konum = new Point(55, 4)
-        };
-        kutuKategori = new MetinKutusu()
-        {
-            Boyut = new Size(20, 3),
-            Konum = new Point(18, 8)
-        };
-        kutuIl = new MetinKutusu()
-        {
-            Boyut = new Size(20, 3),
-            Konum = new Point(18, 12)
-        };
-        kutuIlce = new MetinKutusu()
-        {
-            Boyut = new Size(20, 3),
-            Konum = new Point(55, 12)
-        };
-        kutuAdres = new MetinKutusu()
-        {
-            Boyut = new Size(57, 3),
-            Konum = new Point(18, 16)
-        };
+        kutuAdSoyad = new MetinKutusu() { Boyut = new Size(20, 3), Konum = new Point(18, 0) };
+        kutuTelefon = new MetinKutusu() { Boyut = new Size(20, 3), Konum = new Point(55, 0) };
 
-        var etiketAdSoyad = new EtiketKutusu()
-        {
-            Boyut = new Size(12, 3),
-            Konum = new Point(3, 0),
-            Deger = "Ad Soyad"
-        };
-        var etiketTelefon = new EtiketKutusu()
-        {
-            Boyut = new Size(12, 3),
-            Konum = new Point(42, 0),
-            Deger = "Telefon"
-        };
-        var etiketFirmaAdi = new EtiketKutusu()
-        {
-            Boyut = new Size(12, 3),
-            Konum = new Point(3, 4),
-            Deger = "Firma Adı"
-        };
-        var etiketFirmaVkn = new EtiketKutusu()
-        {
-            Boyut = new Size(12, 3),
-            Konum = new Point(42, 4),
-            Deger = "Firma VKN"
-        };
-        var etiketKategori = new EtiketKutusu()
-        {
-            Boyut = new Size(12, 3),
-            Konum = new Point(3, 8),
-            Deger = "Kategori"
-        };
-        var etiketIl = new EtiketKutusu()
-        {
-            Boyut = new Size(12, 3),
-            Konum = new Point(3, 12),
-            Deger = "İl"
-        };
-        var etiketIlce = new EtiketKutusu()
-        {
-            Boyut = new Size(12, 3),
-            Konum = new Point(42, 12),
-            Deger = "İlçe"
-        };
-        var etiketAdres = new EtiketKutusu()
-        {
-            Boyut = new Size(12, 3),
-            Konum = new Point(3, 16),
-            Deger = "Adres"
-        };
+        kutuFirmaAdi = new MetinKutusu() { Boyut = new Size(20, 3), Konum = new Point(18, 4) };
+        kutuFirmaVkn = new MetinKutusu() { Boyut = new Size(20, 3), Konum = new Point(55, 4) };
+
+        kutuBorc = new MetinKutusu() { Boyut = new Size(20, 3), Konum = new Point(18, 8) };
+        kutuAlacak = new MetinKutusu() { Boyut = new Size(20, 3), Konum = new Point(55, 8) };
+
+        kutuKategori = new MetinKutusu() { Boyut = new Size(20, 3), Konum = new Point(18, 12) };
+
+        kutuIl = new MetinKutusu() { Boyut = new Size(20, 3), Konum = new Point(18, 16) };
+        kutuIlce = new MetinKutusu() { Boyut = new Size(20, 3), Konum = new Point(55, 16) };
+
+        kutuAdres = new MetinKutusu() { Boyut = new Size(57, 3), Konum = new Point(18, 20) };
+
+        var etiketAdSoyad = new EtiketKutusu() { Boyut = new Size(12, 3), Konum = new Point(3, 0), Deger = "Ad Soyad" };
+        var etiketTelefon = new EtiketKutusu() { Boyut = new Size(12, 3), Konum = new Point(42, 0), Deger = "Telefon" };
+
+        var etiketFirmaAdi = new EtiketKutusu() { Boyut = new Size(12, 3), Konum = new Point(3, 4), Deger = "Firma Adı" };
+        var etiketFirmaVkn = new EtiketKutusu() { Boyut = new Size(12, 3), Konum = new Point(42, 4), Deger = "Firma VKN" };
+
+        var etiketBorc = new EtiketKutusu() { Boyut = new Size(12, 3), Konum = new Point(3, 8), Deger = "Borç" };
+        var etiketAlacak = new EtiketKutusu() { Boyut = new Size(12, 3), Konum = new Point(42, 8), Deger = "Alacak" };
+
+        var etiketKategori = new EtiketKutusu() { Boyut = new Size(12, 3), Konum = new Point(3, 12), Deger = "Kategori" };
+
+        var etiketIl = new EtiketKutusu() { Boyut = new Size(12, 3), Konum = new Point(3, 16), Deger = "İl" };
+        var etiketIlce = new EtiketKutusu() { Boyut = new Size(12, 3), Konum = new Point(42, 16), Deger = "İlçe" };
+
+        var etiketAdres = new EtiketKutusu() { Boyut = new Size(12, 3), Konum = new Point(3, 20), Deger = "Adres" };
 
         var butonGuncelle = new ButonKutusu()
         {
             Boyut = new Size(16, 3),
-            Konum = new Point(28, 22),
+            Konum = new Point(28, 24),
             Deger = "Güncelle"
         };
+
         butonGuncelle.IslemYap += Guncelle;
 
         Kutular.Add(kutuAdSoyad);
@@ -195,6 +141,12 @@ public class CariGuncelleme : Form
 
         Kutular.Add(kutuFirmaVkn);
         Kutular.Add(etiketFirmaVkn);
+
+        Kutular.Add(kutuBorc);
+        Kutular.Add(etiketBorc);
+
+        Kutular.Add(kutuAlacak);
+        Kutular.Add(etiketAlacak);
 
         Kutular.Add(kutuKategori);
         Kutular.Add(etiketKategori);
@@ -248,6 +200,8 @@ public class CariGuncelleme : Form
         kutuTelefon.Deger = DegeriBul(kayit, "Telefon");
         kutuFirmaAdi.Deger = DegeriBul(kayit, "Firma Adı");
         kutuFirmaVkn.Deger = DegeriBul(kayit, "Firma VKN");
+        kutuBorc.Deger = DegeriBul(kayit, "Borç");
+        kutuAlacak.Deger = DegeriBul(kayit, "Alacak");
         kutuKategori.Deger = DegeriBul(kayit, "Kategori");
         kutuIl.Deger = DegeriBul(kayit, "İl");
         kutuIlce.Deger = DegeriBul(kayit, "İlçe");
@@ -261,6 +215,7 @@ public class CariGuncelleme : Form
             if (satir.StartsWith(alanAdi))
             {
                 string[] parcalar = satir.Split(':');
+
                 if (parcalar.Length >= 2)
                     return string.Join(":", parcalar.Skip(1)).Trim();
             }
@@ -279,18 +234,21 @@ public class CariGuncelleme : Form
 
         kayitlar[secilenKayitIndex] = new string[]
         {
-            "Tarih      : " + DateTime.Now,
-            "Ad Soyad   : " + kutuAdSoyad.Deger,
-            "Telefon    : " + kutuTelefon.Deger,
-            "Firma Adı  : " + kutuFirmaAdi.Deger,
-            "Firma VKN  : " + kutuFirmaVkn.Deger,
-            "Kategori   : " + kutuKategori.Deger,
-            "İl         : " + kutuIl.Deger,
-            "İlçe       : " + kutuIlce.Deger,
-            "Adres      : " + kutuAdres.Deger
+            "Tarih : " + DateTime.Now,
+            "Ad Soyad : " + kutuAdSoyad.Deger,
+            "Telefon : " + kutuTelefon.Deger,
+            "Firma Adı : " + kutuFirmaAdi.Deger,
+            "Firma VKN : " + kutuFirmaVkn.Deger,
+            "Borç : " + kutuBorc.Deger,
+            "Alacak : " + kutuAlacak.Deger,
+            "Kategori : " + kutuKategori.Deger,
+            "İl : " + kutuIl.Deger,
+            "İlçe : " + kutuIlce.Deger,
+            "Adres : " + kutuAdres.Deger
         };
 
         DosyayaTumKayitlariYaz();
+
         MesajYaz("Cari kaydı güncellendi!");
     }
 
@@ -327,6 +285,7 @@ public class CariGuncelleme : Form
                     kayitListesi.Add(aktifKayit.ToArray());
                     aktifKayit.Clear();
                 }
+
                 continue;
             }
 

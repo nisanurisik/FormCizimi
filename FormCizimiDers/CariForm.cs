@@ -12,129 +12,53 @@ public class CariForm : Form
     private MetinKutusu kutuIlce;
     private MetinKutusu kutuAdres;
     private MetinKutusu kutuKategori;
+    private MetinKutusu kutuBorc;
+    private MetinKutusu kutuAlacak;
 
     public CariForm()
     {
-        kutuAdSoyad = new MetinKutusu()
-        {
-            Boyut = new Size(20, 3),
-            Konum = new Point(18, 0)
-        };
-        kutuTelefon = new MetinKutusu()
-        {
-            Boyut = new Size(20, 3),
-            Konum = new Point(55, 0)
-        };
-        kutuFirmaAdi = new MetinKutusu()
-        {
-            Boyut = new Size(20, 3),
-            Konum = new Point(18, 4)
-        };
-        kutuFirmaVkn = new MetinKutusu()
-        {
-            Boyut = new Size(20, 3),
-            Konum = new Point(55, 4)
-        };
-        kutuKategori = new MetinKutusu()
-        {
-            Boyut = new Size(20, 3),
-            Konum = new Point(18, 8)
-        };
-        kutuIl = new MetinKutusu()
-        {
-            Boyut = new Size(20, 3),
-            Konum = new Point(18, 12)
-        };
-        kutuIlce = new MetinKutusu()
-        {
-            Boyut = new Size(20, 3),
-            Konum = new Point(55, 12)
-        };
-        kutuAdres = new MetinKutusu()
-        {
-            Boyut = new Size(57, 3),
-            Konum = new Point(18, 16)
-        };
+        kutuAdSoyad = new MetinKutusu() { Boyut = new Size(20, 3), Konum = new Point(18, 0) };
+        kutuTelefon = new MetinKutusu() { Boyut = new Size(20, 3), Konum = new Point(55, 0) };
 
-        var etiketAdSoyad = new EtiketKutusu()
-        {
-            Boyut = new Size(12, 3),
-            Konum = new Point(3, 0),
-            Deger = "Ad Soyad"
-        };
-        var etiketTelefon = new EtiketKutusu()
-        {
-            Boyut = new Size(12, 3),
-            Konum = new Point(42, 0),
-            Deger = "Telefon"
-        };
-        var etiketFirmaAdi = new EtiketKutusu()
-        {
-            Boyut = new Size(12, 3),
-            Konum = new Point(3, 4),
-            Deger = "Firma Adı"
-        };
-        var etiketFirmaVkn = new EtiketKutusu()
-        {
-            Boyut = new Size(12, 3),
-            Konum = new Point(42, 4),
-            Deger = "Firma VKN"
-        };
-        var etiketKategori = new EtiketKutusu()
-        {
-            Boyut = new Size(12, 3),
-            Konum = new Point(3, 8),
-            Deger = "Kategori"
-        };
-        var etiketIl = new EtiketKutusu()
-        {
-            Boyut = new Size(12, 3),
-            Konum = new Point(3, 12),
-            Deger = "İl"
-        };
-        var etiketIlce = new EtiketKutusu()
-        {
-            Boyut = new Size(12, 3),
-            Konum = new Point(42, 12),
-            Deger = "İlçe"
-        };
-        var etiketAdres = new EtiketKutusu()
-        {
-            Boyut = new Size(12, 3),
-            Konum = new Point(3, 16),
-            Deger = "Adres"
-        };
+        kutuFirmaAdi = new MetinKutusu() { Boyut = new Size(20, 3), Konum = new Point(18, 4) };
+        kutuFirmaVkn = new MetinKutusu() { Boyut = new Size(20, 3), Konum = new Point(55, 4) };
 
-        var butonKaydet = new ButonKutusu()
-        {
-            Boyut = new Size(14, 3),
-            Konum = new Point(6, 22),
-            Deger = "Kaydet"
-        };
+        kutuBorc = new MetinKutusu() { Boyut = new Size(20, 3), Konum = new Point(18, 8) };
+        kutuAlacak = new MetinKutusu() { Boyut = new Size(20, 3), Konum = new Point(55, 8) };
+
+        kutuKategori = new MetinKutusu() { Boyut = new Size(20, 3), Konum = new Point(18, 12) };
+
+        kutuIl = new MetinKutusu() { Boyut = new Size(20, 3), Konum = new Point(18, 16) };
+        kutuIlce = new MetinKutusu() { Boyut = new Size(20, 3), Konum = new Point(55, 16) };
+
+        kutuAdres = new MetinKutusu() { Boyut = new Size(57, 3), Konum = new Point(18, 20) };
+
+        var etiketAdSoyad = new EtiketKutusu() { Boyut = new Size(12, 3), Konum = new Point(3, 0), Deger = "Ad Soyad" };
+        var etiketTelefon = new EtiketKutusu() { Boyut = new Size(12, 3), Konum = new Point(42, 0), Deger = "Telefon" };
+
+        var etiketFirmaAdi = new EtiketKutusu() { Boyut = new Size(12, 3), Konum = new Point(3, 4), Deger = "Firma Adı" };
+        var etiketFirmaVkn = new EtiketKutusu() { Boyut = new Size(12, 3), Konum = new Point(42, 4), Deger = "Firma VKN" };
+
+        var etiketBorc = new EtiketKutusu() { Boyut = new Size(12, 3), Konum = new Point(3, 8), Deger = "Borç" };
+        var etiketAlacak = new EtiketKutusu() { Boyut = new Size(12, 3), Konum = new Point(42, 8), Deger = "Alacak" };
+
+        var etiketKategori = new EtiketKutusu() { Boyut = new Size(12, 3), Konum = new Point(3, 12), Deger = "Kategori" };
+
+        var etiketIl = new EtiketKutusu() { Boyut = new Size(12, 3), Konum = new Point(3, 16), Deger = "İl" };
+        var etiketIlce = new EtiketKutusu() { Boyut = new Size(12, 3), Konum = new Point(42, 16), Deger = "İlçe" };
+
+        var etiketAdres = new EtiketKutusu() { Boyut = new Size(12, 3), Konum = new Point(3, 20), Deger = "Adres" };
+
+        var butonKaydet = new ButonKutusu() { Boyut = new Size(14, 3), Konum = new Point(6, 24), Deger = "Kaydet" };
         butonKaydet.IslemYap += KaydeteBasildi;
 
-        var butonListele = new ButonKutusu()
-        {
-            Boyut = new Size(14, 3),
-            Konum = new Point(24, 22),
-            Deger = "Listele"
-        };
+        var butonListele = new ButonKutusu() { Boyut = new Size(14, 3), Konum = new Point(24, 24), Deger = "Listele" };
         butonListele.IslemYap += ListeleyeBasildi;
 
-        var butonCariGuncelle = new ButonKutusu()
-        {
-            Boyut = new Size(18, 3),
-            Konum = new Point(42, 22),
-            Deger = "Cari Güncelle"
-        };
+        var butonCariGuncelle = new ButonKutusu() { Boyut = new Size(18, 3), Konum = new Point(42, 24), Deger = "Cari Güncelle" };
         butonCariGuncelle.IslemYap += CariGuncelleyeBasildi;
 
-        var butonVazgec = new ButonKutusu()
-        {
-            Boyut = new Size(14, 3),
-            Konum = new Point(64, 22),
-            Deger = "Vazgeç"
-        };
+        var butonVazgec = new ButonKutusu() { Boyut = new Size(14, 3), Konum = new Point(64, 24), Deger = "Vazgeç" };
         butonVazgec.IslemYap += VazgeceBasildi;
 
         Kutular.Add(kutuAdSoyad);
@@ -148,6 +72,12 @@ public class CariForm : Form
 
         Kutular.Add(kutuFirmaVkn);
         Kutular.Add(etiketFirmaVkn);
+
+        Kutular.Add(kutuBorc);
+        Kutular.Add(etiketBorc);
+
+        Kutular.Add(kutuAlacak);
+        Kutular.Add(etiketAlacak);
 
         Kutular.Add(kutuKategori);
         Kutular.Add(etiketKategori);
@@ -173,15 +103,17 @@ public class CariForm : Form
 
         string kayit =
             "=====================================\n" +
-            "Tarih      : " + DateTime.Now + "\n" +
-            "Ad Soyad   : " + kutuAdSoyad.Deger + "\n" +
-            "Telefon    : " + kutuTelefon.Deger + "\n" +
-            "Firma Adı  : " + kutuFirmaAdi.Deger + "\n" +
-            "Firma VKN  : " + kutuFirmaVkn.Deger + "\n" +
-            "Kategori   : " + kutuKategori.Deger + "\n" +
-            "İl         : " + kutuIl.Deger + "\n" +
-            "İlçe       : " + kutuIlce.Deger + "\n" +
-            "Adres      : " + kutuAdres.Deger + "\n" +
+            "Tarih : " + DateTime.Now + "\n" +
+            "Ad Soyad : " + kutuAdSoyad.Deger + "\n" +
+            "Telefon : " + kutuTelefon.Deger + "\n" +
+            "Firma Adı : " + kutuFirmaAdi.Deger + "\n" +
+            "Firma VKN : " + kutuFirmaVkn.Deger + "\n" +
+            "Borç : " + kutuBorc.Deger + "\n" +
+            "Alacak : " + kutuAlacak.Deger + "\n" +
+            "Kategori : " + kutuKategori.Deger + "\n" +
+            "İl : " + kutuIl.Deger + "\n" +
+            "İlçe : " + kutuIlce.Deger + "\n" +
+            "Adres : " + kutuAdres.Deger + "\n" +
             "=====================================\n\n";
 
         File.AppendAllText(dosyaYolu, kayit);
@@ -206,6 +138,8 @@ public class CariForm : Form
         kutuTelefon.Deger = "";
         kutuFirmaAdi.Deger = "";
         kutuFirmaVkn.Deger = "";
+        kutuBorc.Deger = "";
+        kutuAlacak.Deger = "";
         kutuKategori.Deger = "";
         kutuIl.Deger = "";
         kutuIlce.Deger = "";

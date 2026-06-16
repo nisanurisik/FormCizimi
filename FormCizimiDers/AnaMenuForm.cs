@@ -55,6 +55,6 @@ public class AnaMenuForm : Form
 
     private void FisIslemleriAc()
     {
-        Program.FormDegistir(new FisForm());
+        Program.FormDegistir(new StokFis());
     }
 }

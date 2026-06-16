@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace FormCizimiDers;
 
-public class FisForm : Form
+public class StokFis : Form
 {
     private readonly string stokDosyaYolu = "stoklar.txt";
     private readonly string fisDosyaYolu = "fisler.txt";
@@ -22,7 +22,7 @@ public class FisForm : Form
 
     private readonly List<FisStokSatiri> stokSatirlari = new List<FisStokSatiri>();
 
-    public FisForm()
+    public StokFis()
     {
         kutuFisNumarasi = new MetinKutusu()
         {
