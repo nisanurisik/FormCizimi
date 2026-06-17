@@ -19,6 +19,7 @@ public class AnaMenuForm : Form
             Konum = new Point(28, 10),
             Deger = "Cari İşlemleri"
         };
+
         butonCari.IslemYap += CariIslemleriAc;
 
         var butonStok = new ButonKutusu()
@@ -27,6 +28,7 @@ public class AnaMenuForm : Form
             Konum = new Point(28, 15),
             Deger = "Stok İşlemleri"
         };
+
         butonStok.IslemYap += StokIslemleriAc;
 
         var butonFis = new ButonKutusu()
@@ -35,6 +37,7 @@ public class AnaMenuForm : Form
             Konum = new Point(28, 20),
             Deger = "Fiş İşlemleri"
         };
+
         butonFis.IslemYap += FisIslemleriAc;
 
         Kutular.Add(etiketBaslik);
@@ -55,6 +58,6 @@ public class AnaMenuForm : Form
 
     private void FisIslemleriAc()
     {
-        Program.FormDegistir(new StokFis());
+        Program.FormDegistir(new FisIslemleriForm());
     }
 }
