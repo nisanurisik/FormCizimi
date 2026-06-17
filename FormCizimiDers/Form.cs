@@ -3,7 +3,8 @@ namespace FormCizimiDers;
 public class Form
 {
     public List<Kutu> Kutular { get; set; }
-    private int aktifKutuIndex = 0;
+
+    protected int aktifKutuIndex = 0;
 
     public Kutu AktifKutu
     {
@@ -22,7 +23,7 @@ public class Form
             kutu.Ciz();
         }
 
-        if (Kutular.Count > 0 && AktifKutu.AktifOlabilir)
+        if (Kutular.Count > 0)
         {
             AktifKutu.AktifEt();
         }
@@ -30,22 +31,26 @@ public class Form
 
     public virtual void TusIsle(ConsoleKeyInfo info)
     {
-        if (Kutular.Count == 0)
+        if (info.Key == ConsoleKey.Tab && info.Modifiers.HasFlag(ConsoleModifiers.Shift))
+        {
+            Program.OncekiFormaDon();
             return;
+        }
 
         if (info.Key == ConsoleKey.Tab || info.Key == ConsoleKey.Enter)
         {
-            var eskiKutu = Kutular[aktifKutuIndex];
-            while (true)
+            AktifKutu.PasifEt();
+
+            do
             {
-                aktifKutuIndex = (aktifKutuIndex + 1) % Kutular.Count;
-                if (AktifKutu.AktifOlabilir)
-                {
-                    eskiKutu.PasifEt();
-                    AktifKutu.AktifEt();
-                    break;
-                }
-            }
+                aktifKutuIndex++;
+
+                if (aktifKutuIndex >= Kutular.Count)
+                    aktifKutuIndex = 0;
+
+            } while (!AktifKutu.AktifOlabilir);
+
+            AktifKutu.AktifEt();
         }
         else
         {
